@@ -2,6 +2,7 @@ import requests
 from dotenv import load_dotenv
 import os
 import spotipy
+import base64
 
 
 # Load environment variables from .env file
@@ -9,17 +10,29 @@ load_dotenv()
 
 
 # Spotify API credentials
-CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
-CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+
 
 def get_spotify_token(client_id, client_secret):
     """Get the access token from Spotify"""
     url = "https://accounts.spotify.com/api/token"
+
+    # Encode Client ID and Secret
+    client_creds = f"{client_id}:{client_secret}"
+    client_creds_b64 = base64.b64encode(client_creds.encode()).decode()
+
     payload = {'grant_type': 'client_credentials'}
-    headers = {'Authorization': f'Basic {client_id}:{client_secret}'}
+    headers = {'Authorization': f'Basic {client_creds_b64}'}
 
     response = requests.post(url, headers=headers, data=payload)
+    
+    # Check if the request was successful
+    if response.status_code != 200:
+        return None
+
     return response.json().get('access_token')
+
 
 def get_top_tracks(artist_id, token):
     """Get the top tracks of an artist from Spotify"""
@@ -29,12 +42,13 @@ def get_top_tracks(artist_id, token):
     response = requests.get(url, headers=headers)
     return response.json()
 
+
 # Replace with your Spotify Client ID and Client Secret
 client_id = CLIENT_ID
 client_secret = CLIENT_SECRET
 
 # Replace with the artist's Spotify ID
-artist_id = 'YOUR_ARTIST_ID_HERE'
+artist_id = '20qISvAhX20dpIbOOzGK3q'
 
 # Get access token
 token = get_spotify_token(client_id, client_secret)
