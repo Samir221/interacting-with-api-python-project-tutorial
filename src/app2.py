@@ -42,10 +42,10 @@ def get_top_tracks(artist_id):
 
 
 # Replace with the artist's Spotify ID
-artist_id = '20qISvAhX20dpIbOOzGK3q'
+ARTIST_ID = '20qISvAhX20dpIbOOzGK3q'
 
 # Get top tracks data using Spotipy
-top_tracks_data = get_top_tracks(artist_id)
+top_tracks_data = get_top_tracks(ARTIST_ID)
 
 # Creating a DataFrame
 df_tracks = pd.DataFrame(top_tracks_data)

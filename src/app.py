@@ -1,8 +1,7 @@
+import os
+import base64
 import requests
 from dotenv import load_dotenv
-import os
-import spotipy
-import base64
 
 
 # Load environment variables from .env file
@@ -43,15 +42,11 @@ def get_top_tracks(artist_id, token):
     return response.json()
 
 
-# Replace with your Spotify Client ID and Client Secret
-client_id = CLIENT_ID
-client_secret = CLIENT_SECRET
-
 # Replace with the artist's Spotify ID
 artist_id = '20qISvAhX20dpIbOOzGK3q'
 
 # Get access token
-token = get_spotify_token(client_id, client_secret)
+token = get_spotify_token(CLIENT_ID, CLIENT_SECRET)
 
 # Get top tracks
 top_tracks = get_top_tracks(artist_id, token)
@@ -59,5 +54,3 @@ top_tracks = get_top_tracks(artist_id, token)
 # Print the top 10 tracks
 for track in top_tracks['tracks'][:10]:
     print(track['name'])
-
-
