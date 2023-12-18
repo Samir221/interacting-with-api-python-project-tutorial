@@ -59,3 +59,5 @@ top_tracks = get_top_tracks(artist_id, token)
 # Print the top 10 tracks
 for track in top_tracks['tracks'][:10]:
     print(track['name'])
+
+
